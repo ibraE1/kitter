@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import { config } from "dotenv";
+import authRouter from "./routes/auth.js";
 
 config();
 var app = express();
@@ -14,8 +15,11 @@ mongoose.connect(
   { useUnifiedTopology: true, useNewUrlParser: true },
   () => {
     console.log("Connected to MongoDB");
-    app.listen(port, () => {
-      console.log(`App listening on port http://localhost:${port}`);
-    });
   }
 );
+
+app.use("/auth", authRouter);
+
+app.listen(port, () => {
+  console.log(`App listening on port http://localhost:${port}`);
+});
