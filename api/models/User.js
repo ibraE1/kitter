@@ -18,8 +18,6 @@ const UserSchema = new mongoose.Schema({
   followings: [String],
   displayName: {
     type: String,
-    minLength: 1,
-    maxLength: 15,
   },
 });
 

@@ -7,7 +7,7 @@ authRouter.post("/register", async (req, res) => {
   const newUser = new User({
     username: req.body.username,
     password: req.body.password,
-    displayName: req.body.displayName,
+    displayName: req.body.displayName || req.body.username,
   });
   const user = await newUser.save();
   res.json(user);
