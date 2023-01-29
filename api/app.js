@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { config } from "dotenv";
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/user.js";
+import postRouter from "./routes/post.js";
 
 config();
 var app = express();
@@ -21,6 +22,7 @@ mongoose.connect(
 
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
+app.use("/post", postRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port http://localhost:${port}`);
