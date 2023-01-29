@@ -9,9 +9,13 @@ const port = 5000;
 app.use(express.json());
 
 mongoose.set("strictQuery", true);
-mongoose.connect(process.env.MONGO_URL, () => {
-  console.log("Connected to MongoDB");
-  app.listen(port, () => {
-    console.log(`App listening on port http://localhost:${port}`);
-  });
-});
+mongoose.connect(
+  process.env.MONGO_URL,
+  { useUnifiedTopology: true, useNewUrlParser: true },
+  () => {
+    console.log("Connected to MongoDB");
+    app.listen(port, () => {
+      console.log(`App listening on port http://localhost:${port}`);
+    });
+  }
+);
