@@ -1,32 +1,61 @@
 import express from "express";
 import Post from "../models/Post.js";
 
-const postRouter = express.Router();
+const router = express.Router();
 
-postRouter.post("/", async (req, res) => {
-  const newPost = new Post({
-    author: req.body.author,
-    content: req.body.content,
-  });
-  const post = await newPost.save();
-  res.json(post);
+// create post
+router.post("/", async (req, res) => {
+  const newPost = new Post(req.body);
+  try {
+    const post = await newPost.save();
+    res.json(post);
+  } catch (error) {
+    res.json(error);
+  }
 });
 
-postRouter.delete("/:id", async (req, res) => {
-  const post = await Post.findOneAndDelete({ id: req.params.id });
-  if (!post) return res.json("Post does not exist");
-  res.json(post);
+// get post
+router.get("/:id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.json("Post does not exist");
+    res.json(post);
+  } catch (error) {
+    res.json(error);
+  }
 });
 
-postRouter.get("/", async (req, res) => {
-  const post = await Post.find();
-  res.json(post);
+// update post
+router.put("/:id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.json("Post does not exist");
+    await post.updateOne({ $set: req.body });
+    res.json(post);
+  } catch (error) {
+    res.json(error);
+  }
 });
 
-postRouter.get("/:id", async (req, res) => {
-  const post = await Post.findOne({ id: req.params.id });
-  if (!post) return res.json("Post does not exist");
-  res.json(post);
+// delete post
+router.delete("/:id", async (req, res) => {
+  try {
+    const post = await Post.findByIdAndDelete(req.params.id);
+    if (!post) return res.json("Post does not exist");
+    res.json(post);
+  } catch (error) {
+    res.json(error);
+  }
 });
 
-export default postRouter;
+// get all posts
+router.get("/explore", async (req, res) => {
+  try {
+    const post = await Post.find();
+    res.json(post);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+export default router;

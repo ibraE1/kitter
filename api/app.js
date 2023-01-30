@@ -6,24 +6,26 @@ import userRouter from "./routes/user.js";
 import postRouter from "./routes/post.js";
 
 config();
-var app = express();
+const app = express();
 const port = 5000;
 
 app.use(express.json());
-
-mongoose.set("strictQuery", true);
-mongoose.connect(
-  process.env.MONGO_URL,
-  { useUnifiedTopology: true, useNewUrlParser: true },
-  () => {
-    console.log("Connected to MongoDB");
-  }
-);
 
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 
-app.listen(port, () => {
-  console.log(`App listening on port http://localhost:${port}`);
-});
+mongoose.set("strictQuery", true);
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  })
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`App listening at http://localhost:${port}`);
+    });
+  })
+  .catch((error) => {
+    console.error(error);
+  });

@@ -14,11 +14,18 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     required: [true, "Password cannot be empty"],
   },
-  followers: [String],
-  followings: [String],
   displayName: {
     type: String,
+    minLength: 1,
+    maxLength: 15,
+    required: [true, "Display name cannot be empty"],
   },
+  joinedAt: {
+    type: Date,
+    default: new Date(),
+  },
+  followers: [String],
+  following: [String],
 });
 
 const UserModel = mongoose.model("User", UserSchema);
