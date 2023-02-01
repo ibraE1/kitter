@@ -22,10 +22,14 @@ function App() {
             )
           }
         />
-        {loggedIn && <Route path="/post/timeline" element={<Timeline />} />}
-        {loggedIn && <Route path="/post/explore" element={<Explore />} />}
-        {loggedIn && <Route path="/user/placeholder" element={<Profile />} />}
-        {loggedIn && <Route path="/auth/*" element={<Navigate to="/" />} />}
+        {loggedIn && (
+          <>
+            <Route path="/post/timeline" element={<Timeline />} />
+            <Route path="/post/explore" element={<Explore />} />
+            <Route path="/user/placeholder" element={<Profile />} />
+            <Route path="/auth/*" element={<Navigate to="/" />} />
+          </>
+        )}
       </Routes>
     </div>
   );
