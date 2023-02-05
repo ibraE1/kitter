@@ -1,10 +1,12 @@
 import express from "express";
 import Post from "../models/Post.js";
+import User from "../models/User.js";
+import verifyToken from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 // create post
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   const newPost = new Post(req.body);
   try {
     const post = await newPost.save();
@@ -15,7 +17,7 @@ router.post("/", async (req, res) => {
 });
 
 // get post
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyToken, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) return res.json("Post does not exist");
@@ -26,10 +28,13 @@ router.get("/:id", async (req, res) => {
 });
 
 // update post
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyToken, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) return res.json("Post does not exist");
+    const user = await User.findOne({ username: post.author });
+    if (user.id != req.body.id)
+      return res.json("Not authorized to update this post");
     await post.updateOne({ $set: req.body });
     res.json(post);
   } catch (error) {
@@ -38,10 +43,14 @@ router.put("/:id", async (req, res) => {
 });
 
 // delete post
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verifyToken, async (req, res) => {
   try {
-    const post = await Post.findByIdAndDelete(req.params.id);
+    const post = await Post.findById(req.params.id);
     if (!post) return res.json("Post does not exist");
+    const user = await User.findOne({ username: post.author });
+    if (user.id != req.body.id)
+      return res.json("Not authorized to delete this post");
+    await post.deleteOne();
     res.json(post);
   } catch (error) {
     res.json(error);
@@ -49,7 +58,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 // get all posts
-router.get("/explore", async (req, res) => {
+router.get("/explore", verifyToken, async (req, res) => {
   try {
     const post = await Post.find();
     res.json(post);
