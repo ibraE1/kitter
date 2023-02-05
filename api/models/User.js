@@ -5,20 +5,18 @@ const UserSchema = new mongoose.Schema({
     type: String,
     minLength: 4,
     maxLength: 15,
-    unique: true,
+    unique: [true, "Username already exists"],
     required: [true, "Username cannot be empty"],
   },
   password: {
     type: String,
     minLength: 6,
-    unique: true,
     required: [true, "Password cannot be empty"],
   },
   displayName: {
     type: String,
     minLength: 1,
     maxLength: 15,
-    required: [true, "Display name cannot be empty"],
   },
   joinedAt: {
     type: Date,

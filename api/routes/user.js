@@ -10,6 +10,7 @@ router.get("/:username", async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username });
     if (!user) return res.json("User does not exist");
+    user.password = null;
     res.json(user);
   } catch (error) {
     res.json(error);
@@ -25,6 +26,7 @@ router.put("/:username", async (req, res) => {
       { new: true }
     );
     if (!user) return res.json("User does not exist");
+    user.password = null;
     res.json(user);
   } catch (error) {
     res.json(error);
@@ -36,6 +38,7 @@ router.delete("/:username", async (req, res) => {
   try {
     const user = await User.findOneAndDelete({ username: req.params.username });
     if (!user) return res.json("User does not exist");
+    user.password = null;
     res.json(user);
   } catch (error) {
     res.json(error);
