@@ -10,9 +10,10 @@ const router = express.Router();
 // get user
 router.get("/:username", verifyToken, async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username });
+    const user = await User.findOne({ username: req.params.username }).select(
+      "-password"
+    );
     if (!user) return res.json("User does not exist");
-    user.password = null;
     res.json(user);
   } catch (error) {
     res.json(error);
@@ -40,12 +41,13 @@ router.put("/:username", verifyToken, async (req, res) => {
 // delete user
 router.delete("/:username", verifyToken, async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username });
+    const user = await User.findOne({ username: req.params.username }).select(
+      "-password"
+    );
     if (!user) return res.json("User does not exist");
     if (user.id != req.body.id)
       return res.json("Not authorized to delete this user");
     await user.deleteOne();
-    user.password = null;
     res.json(user);
   } catch (error) {
     res.json(error);

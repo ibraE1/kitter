@@ -5,9 +5,6 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "24h" });
-};
 // create user
 router.post("/register", async (req, res) => {
   const hashedPassword = await bcrypt.hash(await req.body.password, 10);
@@ -18,7 +15,8 @@ router.post("/register", async (req, res) => {
   });
   try {
     const user = await newUser.save();
-    res.json(generateToken(user.id));
+    user.password = null;
+    res.json(user.id);
   } catch (error) {
     res.json(error);
   }
@@ -29,7 +27,14 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
     if (!user) return res.json("Username is not registered");
     if (await bcrypt.compare(req.body.password, user.password)) {
-      res.json(generateToken(user.id));
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+        expiresIn: "15s",
+      });
+      res.cookie("accessToken", token, {
+        maxAge: 24 * 60 * 60 * 1000, //24 hours
+        httpOnly: true,
+      });
+      res.json(user.id);
     } else res.json("Wrong password");
   } catch (error) {
     res.json(error);
