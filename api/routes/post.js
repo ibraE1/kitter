@@ -33,7 +33,7 @@ router.put("/:id", verifyToken, async (req, res) => {
     const post = await Post.findById(req.params.id);
     if (!post) return res.json("Post does not exist");
     const user = await User.findOne({ username: post.author });
-    if (user.id != req.body.id)
+    if (user.id != req.userid)
       return res.json("Not authorized to update this post");
     await post.updateOne({ $set: req.body });
     res.json(post);
@@ -48,7 +48,7 @@ router.delete("/:id", verifyToken, async (req, res) => {
     const post = await Post.findById(req.params.id);
     if (!post) return res.json("Post does not exist");
     const user = await User.findOne({ username: post.author });
-    if (user.id != req.body.id)
+    if (user.id != req.userid)
       return res.json("Not authorized to delete this post");
     await post.deleteOne();
     res.json(post);

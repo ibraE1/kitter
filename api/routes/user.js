@@ -25,7 +25,7 @@ router.put("/:username", verifyToken, async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username });
     if (!user) return res.json("User does not exist");
-    if (user.id != req.body.id)
+    if (user.id != req.userid)
       return res.json("Not authorized to update this user");
     if (req.body.hasOwnProperty("password")) {
       req.body.password = await bcrypt.hash(await req.body.password, 10);
@@ -45,7 +45,7 @@ router.delete("/:username", verifyToken, async (req, res) => {
       "-password"
     );
     if (!user) return res.json("User does not exist");
-    if (user.id != req.body.id)
+    if (user.id != req.userid)
       return res.json("Not authorized to delete this user");
     await user.deleteOne();
     res.json(user);
