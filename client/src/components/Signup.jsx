@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { register } from "../api/auth.js";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -12,19 +13,12 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => {
-        navigate("/auth/login");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const registerUser = async () => {
+      const userId = await register(formData);
+      console.log(userId);
+      navigate("/login");
+    };
+    registerUser();
   };
 
   return (
@@ -72,6 +66,8 @@ function Signup() {
         ></input>
         <button onClick={handleSubmit}>Sign Up</button>
       </form>
+      <p>Have an account already?</p>
+      <Link to="/login">Log in here</Link>
     </div>
   );
 }

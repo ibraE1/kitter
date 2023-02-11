@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../api/auth.js";
 
-function Login({ setLoggedIn }) {
+function Login({ setIsLoggedIn }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -11,25 +12,19 @@ function Login({ setLoggedIn }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then(() => {
-        setLoggedIn(true);
+    const loginUser = async () => {
+      const userId = await login(formData);
+      if (userId) {
+        setIsLoggedIn(true);
         navigate("/timeline");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      }
+    };
+    loginUser();
   };
 
   return (
     <div className="Signup">
-      <h1>Sign Up</h1>
+      <h1>Login</h1>
       <form>
         <label htmlFor="username">Username</label>
         <input
@@ -59,6 +54,8 @@ function Login({ setLoggedIn }) {
         ></input>
         <button onClick={handleSubmit}>Login</button>
       </form>
+      <p>Don't have an account?</p>
+      <Link to="/register">Sign up here</Link>
     </div>
   );
 }

@@ -1,37 +1,55 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, redirect, Navigate } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Timeline from "./components/Timeline";
 import Explore from "./components/Explore";
-import Profile from "./components/Profile";
-import Authentication from "./components/Authentication";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { verifyLogin } from "./api/auth";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState();
+  const [isloggedIn, setIsLoggedIn] = useState();
+
+  useEffect(() => {
+    const verify = async () => {
+      const isVerified = await verifyLogin();
+      if (isVerified == "Authorized") {
+        setIsLoggedIn(true);
+        redirect("/timeline");
+      } else setIsLoggedIn(false);
+    };
+    verify();
+  }, []);
+
   return (
     <div className="App">
-      {loggedIn ? <Navbar /> : <Authentication setLoggedIn={setLoggedIn} />}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            loggedIn ? (
-              <Navigate to="/post/timeline" />
-            ) : (
-              <Navigate to="/auth/register" />
-            )
-          }
-        />
-        {loggedIn && (
-          <>
-            <Route path="/post/timeline" element={<Timeline />} />
-            <Route path="/post/explore" element={<Explore />} />
-            <Route path="/user/placeholder" element={<Profile />} />
-            <Route path="/auth/*" element={<Navigate to="/" />} />
-          </>
-        )}
-      </Routes>
+      {isloggedIn === undefined ? (
+        <h1>loading</h1>
+      ) : (
+        <>
+          {isloggedIn && <Navbar setIsLoggedIn={setIsLoggedIn} />}
+          <Routes>
+            {!isloggedIn && (
+              <>
+                <Route path="/*" element={<Navigate to={"/register"} />} />
+                <Route
+                  path="/login"
+                  element={<Login setIsLoggedIn={setIsLoggedIn} />}
+                />
+                <Route path="/register" element={<Signup />} />
+              </>
+            )}
+            {isloggedIn && (
+              <>
+                <Route path="/" element={<Navigate to={"/timeline"} />} />
+                <Route path="/timeline" element={<Timeline />} />
+                <Route path="/explore" element={<Explore />} />
+              </>
+            )}
+          </Routes>
+        </>
+      )}
     </div>
   );
 }
