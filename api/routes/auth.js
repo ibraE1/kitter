@@ -1,62 +1,16 @@
 import express from "express";
-import User from "../models/User.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import verifyToken from "../middleware/authMiddleware.js";
+import { register, login, logout, verifyLogin } from "../controllers/auth.js";
 
 const router = express.Router();
 
 // create user
-router.post("/register", async (req, res) => {
-  const hashedPassword = await bcrypt.hash(await req.body.password, 10);
-  const newUser = new User({
-    username: req.body.username,
-    password: hashedPassword,
-    displayName: req.body.displayName || req.body.username,
-  });
-  try {
-    const user = await newUser.save();
-    user.password = null;
-    res.json(user.id);
-  } catch (error) {
-    res.json(error);
-  }
-});
+router.post("/register", register);
 
-router.post("/login", async (req, res) => {
-  try {
-    const user = await User.findOne({ username: req.body.username });
-    if (!user) return res.json("Username is not registered");
-    if (await bcrypt.compare(req.body.password, user.password)) {
-      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-        expiresIn: "24h",
-      });
-      res.cookie("accessToken", token, {
-        maxAge: 24 * 60 * 60 * 1000, //24 hours
-        httpOnly: true,
-      });
-      res.json(user.id);
-    } else res.json("Wrong password");
-  } catch (error) {
-    res.json(error);
-  }
-});
+router.post("/login", login);
 
-router.post("/logout", verifyToken, async (req, res) => {
-  try {
-    res.clearCookie("accessToken", { httpOnly: true });
-    res.json("Logged Out");
-  } catch (error) {
-    res.json(error);
-  }
-});
+router.post("/logout", verifyToken, logout);
 
-router.get("/verifyLogin", verifyToken, async (req, res) => {
-  try {
-    res.json("Authorized");
-  } catch (error) {
-    res.json(error);
-  }
-});
+router.get("/verifyLogin", verifyToken, verifyLogin);
 
 export default router;
