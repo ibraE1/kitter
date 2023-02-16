@@ -19,8 +19,8 @@ function Navbar({ setIsLoggedIn }) {
   return (
     <div className="Navbar">
       <h1>Title</h1>
-      <Link to="/post/timeline">Timeline</Link>
-      <Link to="/post/explore">Explore</Link>
+      <Link to="/timeline">Timeline</Link>
+      <Link to="/explore">Explore</Link>
       <Link to="/user/placeholder">Profile</Link>
       <button onClick={handleLogout}>Log out</button>
     </div>

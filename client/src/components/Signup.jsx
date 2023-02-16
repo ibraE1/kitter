@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../api/auth.js";
+import FormInput from "./FormInput.jsx";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -25,45 +26,24 @@ function Signup() {
     <div className="Signup">
       <h1>Sign Up</h1>
       <form>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          value={formData.username}
-          onChange={(e) =>
-            setFormData({
-              username: e.target.value,
-              password: formData.password,
-              displayName: formData.displayName,
-            })
-          }
-        ></input>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          value={formData.password}
-          onChange={(e) =>
-            setFormData({
-              username: formData.username,
-              password: e.target.value,
-              displayName: formData.displayName,
-            })
-          }
-        ></input>
-        <label htmlFor="displayName">Display Name</label>
-        <input
-          type="text"
-          id="displayName"
-          value={formData.displayName}
-          onChange={(e) =>
-            setFormData({
-              username: formData.username,
-              password: formData.password,
-              displayName: e.target.value,
-            })
-          }
-        ></input>
+        <FormInput
+          name={"username"}
+          type={"text"}
+          formData={formData}
+          setFormData={setFormData}
+        />
+        <FormInput
+          name={"password"}
+          type={"password"}
+          formData={formData}
+          setFormData={setFormData}
+        />
+        <FormInput
+          name={"displayName"}
+          type={"text"}
+          formData={formData}
+          setFormData={setFormData}
+        />
         <button onClick={handleSubmit}>Sign Up</button>
       </form>
       <p>Have an account already?</p>
