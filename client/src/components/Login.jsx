@@ -24,7 +24,10 @@ function Login({ setIsLoggedIn }) {
   };
 
   return (
-    <div className="flex flex-col justify-between items-stretch h-[calc(100vh-8rem)] bg-white rounded-t-3xl p-12">
+    <div
+      className="flex flex-col justify-between items-stretch h-[calc(100vh-8rem)] bg-white rounded-t-3xl p-12
+    md:rounded-r-3xl md:rounded-l-none md:h-screen md:w-6/12"
+    >
       <h1 className="text-center text-indigo-700 text-3xl font-bold mb-4">
         Welcome back!
       </h1>

@@ -30,8 +30,8 @@ function App() {
         <>
           {isloggedIn && <Navbar setIsLoggedIn={setIsLoggedIn} />}
           {!isloggedIn && (
-            <div>
-              <Logo styles="m-auto w-24 py-4" />
+            <div className="flex flex-col md:flex-row-reverse">
+              <Logo styles="m-auto w-24 py-4 md:w-96" />
               <Routes>
                 <Route path="/*" element={<Navigate to={"/register"} />} />
                 <Route
