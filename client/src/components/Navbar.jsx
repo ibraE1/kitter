@@ -20,7 +20,7 @@ function Navbar({ setIsLoggedIn }) {
   return (
     <div>
       <div>
-        <Logo size={48} />
+        <Logo styles="w-12" />
         <h1>Kitter</h1>
       </div>
       <Link to="/timeline">Timeline</Link>

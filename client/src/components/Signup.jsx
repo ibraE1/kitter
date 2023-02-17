@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../api/auth.js";
 import FormInput from "./FormInput.jsx";
+import Logo from "./Logo";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -23,9 +24,14 @@ function Signup() {
   };
 
   return (
-    <div>
-      <h1>Create Account</h1>
-      <form>
+    <div className="flex flex-col justify-between items-stretch h-[calc(100vh-8rem)] bg-white rounded-t-3xl p-12">
+      <h1 className="text-center text-indigo-700 text-3xl font-bold mb-4">
+        Welcome!
+      </h1>
+      <p className="text-center text-slate-700 font-medium text-lg">
+        Create an account and get started
+      </p>
+      <form className="flex flex-col justify-evenly items-center h-4/6">
         <FormInput
           name={"username"}
           type={"text"}
@@ -44,12 +50,23 @@ function Signup() {
           formData={formData}
           setFormData={setFormData}
         />
-        <button onClick={handleSubmit}>Sign Up</button>
+        <button
+          className="bg-indigo-700 hover:bg-indigo-500 text-white font-bold rounded-full w-4/5 p-4"
+          onClick={handleSubmit}
+        >
+          Sign Up
+        </button>
       </form>
-      <div></div>
-      <p>
-        Have an account already? <Link to="/login">Log in here</Link>
-      </p>
+      <div>
+        <p className="text-center text-slate-700 font-medium text-xl">
+          Have an account already?
+        </p>
+        <Link to="/login">
+          <p className="text-center text-indigo-700 underline font-semibold text-lg">
+            Log in here
+          </p>
+        </Link>
+      </div>
     </div>
   );
 }

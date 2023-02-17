@@ -24,9 +24,14 @@ function Login({ setIsLoggedIn }) {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form>
+    <div className="flex flex-col justify-between items-stretch h-[calc(100vh-8rem)] bg-white rounded-t-3xl p-12">
+      <h1 className="text-center text-indigo-700 text-3xl font-bold mb-4">
+        Welcome back!
+      </h1>
+      <p className="text-center text-slate-700 font-medium text-lg">
+        Please login to continue
+      </p>
+      <form className="flex flex-col justify-evenly items-center h-4/6">
         <FormInput
           name={"username"}
           type={"text"}
@@ -39,10 +44,23 @@ function Login({ setIsLoggedIn }) {
           formData={formData}
           setFormData={setFormData}
         />
-        <button onClick={handleSubmit}>Login</button>
+        <button
+          className="bg-indigo-700 hover:bg-indigo-500 text-white font-bold rounded-full w-4/5 p-4"
+          onClick={handleSubmit}
+        >
+          Login
+        </button>
       </form>
-      <p>Don't have an account?</p>
-      <Link to="/register">Sign up here</Link>
+      <div>
+        <p className="text-center text-slate-700 font-medium text-xl">
+          Don't have an account?
+        </p>
+        <Link to="/register">
+          <p className="text-center text-indigo-700 underline font-semibold text-lg">
+            Sign up here
+          </p>
+        </Link>
+      </div>
     </div>
   );
 }

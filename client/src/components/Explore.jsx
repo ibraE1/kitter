@@ -16,7 +16,7 @@ function Explore() {
   return (
     <div>
       {posts == undefined ? (
-        <h1>loading</h1>
+        <div>Loading...</div>
       ) : (
         <>
           <h1>Explore</h1>
