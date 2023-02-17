@@ -17,7 +17,7 @@ function Navbar({ setIsLoggedIn }) {
   };
 
   return (
-    <div className="Navbar">
+    <div>
       <h1>Title</h1>
       <Link to="/timeline">Timeline</Link>
       <Link to="/explore">Explore</Link>

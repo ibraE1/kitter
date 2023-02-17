@@ -23,8 +23,8 @@ function Signup() {
   };
 
   return (
-    <div className="Signup">
-      <h1>Sign Up</h1>
+    <div>
+      <h1>Create Account</h1>
       <form>
         <FormInput
           name={"username"}
@@ -46,8 +46,10 @@ function Signup() {
         />
         <button onClick={handleSubmit}>Sign Up</button>
       </form>
-      <p>Have an account already?</p>
-      <Link to="/login">Log in here</Link>
+      <div></div>
+      <p>
+        Have an account already? <Link to="/login">Log in here</Link>
+      </p>
     </div>
   );
 }

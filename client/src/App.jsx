@@ -1,5 +1,4 @@
 import { Route, Routes, redirect, Navigate } from "react-router-dom";
-import "./App.css";
 import Navbar from "./components/Navbar";
 import Timeline from "./components/Timeline";
 import Explore from "./components/Explore";
@@ -23,7 +22,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div>
       {isloggedIn === undefined ? (
         <h1>loading</h1>
       ) : (

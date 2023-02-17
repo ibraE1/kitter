@@ -24,7 +24,7 @@ function Login({ setIsLoggedIn }) {
   };
 
   return (
-    <div className="Signup">
+    <div>
       <h1>Login</h1>
       <form>
         <FormInput

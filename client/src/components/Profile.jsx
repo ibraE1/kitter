@@ -2,7 +2,7 @@ import Post from "./Post";
 
 function Profile() {
   return (
-    <div className="Profile">
+    <div>
       <div>
         <h1>User</h1>
         <p>followers</p>

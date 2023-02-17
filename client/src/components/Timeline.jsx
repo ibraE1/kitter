@@ -2,7 +2,7 @@ import Post from "./Post";
 
 function Timeline() {
   return (
-    <div className="Timeline">
+    <div>
       <h1>Timeline</h1>
     </div>
   );
