@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../api/auth";
+import Logo from "./Logo";
 
 function Navbar({ setIsLoggedIn }) {
   const navigate = useNavigate();
@@ -18,7 +19,10 @@ function Navbar({ setIsLoggedIn }) {
 
   return (
     <div>
-      <h1>Title</h1>
+      <div>
+        <Logo size={48} />
+        <h1>Kitter</h1>
+      </div>
       <Link to="/timeline">Timeline</Link>
       <Link to="/explore">Explore</Link>
       <Link to="/user/placeholder">Profile</Link>
