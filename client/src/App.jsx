@@ -31,7 +31,12 @@ function App() {
           {isloggedIn && <Navbar setIsLoggedIn={setIsLoggedIn} />}
           {!isloggedIn && (
             <div className="flex flex-col md:flex-row-reverse">
-              <Logo styles="m-auto w-24 py-4 md:w-96" />
+              <div className="flex flex-col py-4 m-auto items-center">
+                <Logo styles="w-24 md:w-96" />
+                <h1 className="text-center text-white text-4xl md:text-8xl font-black font-display">
+                  Kitter
+                </h1>
+              </div>
               <Routes>
                 <Route path="/*" element={<Navigate to={"/register"} />} />
                 <Route
