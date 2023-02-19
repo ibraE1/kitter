@@ -1,4 +1,4 @@
-import { Route, Routes, redirect, Navigate } from "react-router-dom";
+import { Route, Routes, redirect, Navigate, Link } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Timeline from "./components/Timeline";
 import Explore from "./components/Explore";
@@ -7,6 +7,7 @@ import { verifyLogin } from "./api/auth";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Logo from "./components/Logo";
+import { PlusCircleIcon } from "@heroicons/react/24/solid";
 
 function App() {
   const [isloggedIn, setIsLoggedIn] = useState();
@@ -28,7 +29,6 @@ function App() {
         <div>Loading...</div>
       ) : (
         <>
-          {isloggedIn && <Navbar setIsLoggedIn={setIsLoggedIn} />}
           {!isloggedIn && (
             <div className="flex flex-col md:flex-row-reverse">
               <div className="flex flex-col py-4 m-auto items-center">
@@ -48,12 +48,19 @@ function App() {
             </div>
           )}
           {isloggedIn && (
-            <div>
+            <div className="h-screen bg-white flex md:flex-row justify-start items-stretch md:justify-start gap-10">
+              <Navbar setIsLoggedIn={setIsLoggedIn} />
               <Routes>
                 <Route path="/" element={<Navigate to={"/timeline"} />} />
                 <Route path="/timeline" element={<Timeline />} />
                 <Route path="/explore" element={<Explore />} />
               </Routes>
+              <Link
+                to="/compose"
+                className="w-16 text-indigo-700 hover:text-indigo-500 absolute bottom-28 right-4 drop-shadow-xl md:hidden"
+              >
+                <PlusCircleIcon />
+              </Link>
             </div>
           )}
         </>
