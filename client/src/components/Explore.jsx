@@ -13,6 +13,10 @@ function Explore({ currentUser }) {
     getPosts();
   }, []);
 
+  const removePost = async (id) => {
+    setPosts(posts.filter((post) => post._id != id));
+  };
+
   return (
     <div className="flex flex-col w-full items-center">
       {posts == undefined ? (
@@ -23,7 +27,14 @@ function Explore({ currentUser }) {
             Explore
           </h1>
           {posts.map((data) => {
-            return <Post key={data} currentUser={currentUser} data={data} />;
+            return (
+              <Post
+                key={data._id}
+                currentUser={currentUser}
+                removePost={removePost}
+                data={data}
+              />
+            );
           })}
         </>
       )}

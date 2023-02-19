@@ -67,4 +67,24 @@ const unlikePost = async (id) => {
   }
 };
 
-export { getPostById, getAllPosts, createPost, likePost, unlikePost };
+const deletePost = async (id) => {
+  try {
+    const response = await fetch("http://localhost:5000/post/" + id, {
+      method: "DELETE",
+      credentials: "include",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  getPostById,
+  getAllPosts,
+  createPost,
+  likePost,
+  unlikePost,
+  deletePost,
+};

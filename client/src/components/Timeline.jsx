@@ -6,6 +6,9 @@ function Timeline() {
       <h1 className="border-b-2 border-slate-300 w-full p-3 text-indigo-700 text-xl font-display font-bold">
         Timeline
       </h1>
+      <h1 className="w-full p-3 text-indigo-700 text-3xl font-display font-black">
+        Coming soon
+      </h1>
     </div>
   );
 }

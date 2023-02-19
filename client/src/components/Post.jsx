@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { HeartIcon } from "@heroicons/react/24/solid";
+import { HeartIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { getUser } from "../api/user";
-import { likePost, unlikePost } from "../api/post";
+import { deletePost, likePost, unlikePost } from "../api/post";
 
-function Post({ data, currentUser }) {
+function Post({ data, currentUser, removePost }) {
   const [likeCount, setLikeCount] = useState(data.likes.length);
   const [user, setUser] = useState({});
   const [isLiked, setIsLiked] = useState(data.likes.includes(currentUser));
@@ -17,16 +17,16 @@ function Post({ data, currentUser }) {
   }, []);
 
   const like = async () => {
-    await likePost(data._id);
     setLikeCount(likeCount + 1);
+    await likePost(data._id);
   };
 
   const unlike = async () => {
-    await unlikePost(data._id);
     setLikeCount(likeCount - 1);
+    await unlikePost(data._id);
   };
 
-  const handleClick = async () => {
+  const handleLike = async () => {
     if (isLiked) {
       setIsLiked(false);
       unlike();
@@ -34,6 +34,11 @@ function Post({ data, currentUser }) {
       setIsLiked(true);
       like();
     }
+  };
+
+  const handleDelete = async () => {
+    await deletePost(data._id);
+    removePost(data._id);
   };
 
   return (
@@ -47,20 +52,31 @@ function Post({ data, currentUser }) {
           </div>
           <p className="text-lg md:text-xl">{data.content}</p>
         </div>
-        <button
-          className="w-16 border-2 border-indigo-700 hover:border-indigo-500 stroke-2 stroke-indigo-700 hover:stroke-indigo-500 text-indigo-700 hover:text-indigo-500 
+        <div className="flex gap-4">
+          {currentUser == user._id && (
+            <button
+              className="border-2 border-indigo-700 hover:border-indigo-500 stroke-2 text-indigo-700 hover:text-indigo-500 
       p-2 rounded-lg flex justify-between outline-none"
-          onClick={handleClick}
-        >
-          <p className="pl-1 font-display font-bold">{likeCount}</p>
-          <HeartIcon
-            className={
-              isLiked
-                ? "h-6 text-indigo-700 hover:text-indigo-500"
-                : "h-6 text-white"
-            }
-          />
-        </button>
+              onClick={handleDelete}
+            >
+              <TrashIcon className="h-6" />
+            </button>
+          )}
+          <button
+            className="w-16 border-2 border-indigo-700 hover:border-indigo-500 stroke-2 stroke-indigo-700 hover:stroke-indigo-500 text-indigo-700 hover:text-indigo-500 
+      p-2 rounded-lg flex justify-between outline-none"
+            onClick={handleLike}
+          >
+            <p className="pl-1 font-display font-bold">{likeCount}</p>
+            <HeartIcon
+              className={
+                isLiked
+                  ? "h-6 text-indigo-700 hover:text-indigo-500"
+                  : "h-6 text-white"
+              }
+            />
+          </button>
+        </div>
       </div>
     </div>
   );

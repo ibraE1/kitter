@@ -16,6 +16,7 @@ import Login from "./components/Login";
 import Logo from "./components/Logo";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import Compose from "./components/Compose";
+import Profile from "./components/Profile";
 
 function App() {
   const [isloggedIn, setIsLoggedIn] = useState();
@@ -69,6 +70,7 @@ function App() {
                   element={<Explore currentUser={currentUser} />}
                 />
                 <Route path="/compose" element={<Compose />} />
+                <Route path="/profile" element={<Profile />} />
               </Routes>
               <Link
                 to="/compose"
