@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getAllPosts } from "../api/post";
 import Post from "./Post";
 
-function Explore() {
+function Explore({ currentUser }) {
   const [posts, setPosts] = useState();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function Explore() {
             Explore
           </h1>
           {posts.map((data) => {
-            return <Post key={data} data={data} />;
+            return <Post key={data} currentUser={currentUser} data={data} />;
           })}
         </>
       )}

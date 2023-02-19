@@ -19,7 +19,7 @@ import Compose from "./components/Compose";
 
 function App() {
   const [isloggedIn, setIsLoggedIn] = useState();
-
+  const [currentUser, setCurrentUser] = useState();
   const location = useLocation();
 
   useEffect(() => {
@@ -27,6 +27,7 @@ function App() {
       const data = await verifyLogin();
       if (data.status == "Authorized") {
         setIsLoggedIn(true);
+        setCurrentUser(data.userId);
         redirect("/timeline");
       } else setIsLoggedIn(false);
     };
@@ -63,7 +64,10 @@ function App() {
               <Routes>
                 <Route path="/" element={<Navigate to={"/timeline"} />} />
                 <Route path="/timeline" element={<Timeline />} />
-                <Route path="/explore" element={<Explore />} />
+                <Route
+                  path="/explore"
+                  element={<Explore currentUser={currentUser} />}
+                />
                 <Route path="/compose" element={<Compose />} />
               </Routes>
               <Link
