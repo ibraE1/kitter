@@ -2,7 +2,11 @@ import Post from "../models/Post.js";
 import User from "../models/User.js";
 
 const createPost = async (req, res) => {
-  const newPost = new Post({ author: req.userid, content: req.body.content });
+  const user = await User.findById(req.userid);
+  const newPost = new Post({
+    author: user.username,
+    content: req.body.content,
+  });
   try {
     const post = await newPost.save();
     res.json(post);

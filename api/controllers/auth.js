@@ -48,7 +48,7 @@ const logout = async (req, res) => {
 
 const verifyLogin = async (req, res) => {
   try {
-    res.json("Authorized");
+    res.json({ userId: req.userid, status: "Authorized" });
   } catch (error) {
     res.json(error);
   }
