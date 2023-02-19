@@ -1,4 +1,11 @@
-import { Route, Routes, redirect, Navigate, Link } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  redirect,
+  Navigate,
+  Link,
+  useLocation,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Timeline from "./components/Timeline";
 import Explore from "./components/Explore";
@@ -8,9 +15,12 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Logo from "./components/Logo";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import Compose from "./components/Compose";
 
 function App() {
   const [isloggedIn, setIsLoggedIn] = useState();
+
+  const location = useLocation();
 
   useEffect(() => {
     const verify = async () => {
@@ -48,16 +58,21 @@ function App() {
             </div>
           )}
           {isloggedIn && (
-            <div className="h-screen bg-white flex md:flex-row justify-start items-stretch md:justify-start gap-10">
+            <div className="h-screen bg-white flex md:flex-row justify-start items-stretch md:justify-start">
               <Navbar setIsLoggedIn={setIsLoggedIn} />
               <Routes>
                 <Route path="/" element={<Navigate to={"/timeline"} />} />
                 <Route path="/timeline" element={<Timeline />} />
                 <Route path="/explore" element={<Explore />} />
+                <Route path="/compose" element={<Compose />} />
               </Routes>
               <Link
                 to="/compose"
-                className="w-16 text-indigo-700 hover:text-indigo-500 absolute bottom-28 right-4 drop-shadow-xl md:hidden"
+                className={
+                  location.pathname == "/compose"
+                    ? "hidden"
+                    : "w-16 text-indigo-700 hover:text-indigo-500 absolute bottom-28 right-4 drop-shadow-xl md:hidden"
+                }
               >
                 <PlusCircleIcon />
               </Link>

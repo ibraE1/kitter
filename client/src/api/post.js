@@ -24,4 +24,21 @@ const getAllPosts = async () => {
   }
 };
 
-export { getPostById, getAllPosts };
+const createPost = async (postContent) => {
+  try {
+    const response = await fetch("http://localhost:5000/post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content: postContent }),
+      credentials: "include",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getPostById, getAllPosts, createPost };

@@ -14,12 +14,14 @@ function Explore() {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col w-full">
       {posts == undefined ? (
         <div>Loading...</div>
       ) : (
         <>
-          <h1>Explore</h1>
+          <h1 className="border-b-2 border-slate-300 w-full p-3 text-indigo-700 text-xl font-display font-bold">
+            Explore
+          </h1>
           {posts.map((data) => {
             return <Post data={data} />;
           })}
