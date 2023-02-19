@@ -24,8 +24,8 @@ function App() {
 
   useEffect(() => {
     const verify = async () => {
-      const isVerified = await verifyLogin();
-      if (isVerified == "Authorized") {
+      const data = await verifyLogin();
+      if (data.status == "Authorized") {
         setIsLoggedIn(true);
         redirect("/timeline");
       } else setIsLoggedIn(false);

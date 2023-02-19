@@ -41,4 +41,30 @@ const createPost = async (postContent) => {
   }
 };
 
-export { getPostById, getAllPosts, createPost };
+const likePost = async (id) => {
+  try {
+    const response = await fetch("http://localhost:5000/post/like/" + id, {
+      method: "POST",
+      credentials: "include",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const unlikePost = async (id) => {
+  try {
+    const response = await fetch("http://localhost:5000/post/unlike/" + id, {
+      method: "POST",
+      credentials: "include",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getPostById, getAllPosts, createPost, likePost, unlikePost };
