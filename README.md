@@ -1,1 +1,3 @@
-# clone-web-app
+# Kitter
+
+MERN bird app clone
