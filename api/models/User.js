@@ -4,20 +4,15 @@ const UserSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      minLength: 4,
-      maxLength: 15,
-      unique: [true, "Username already exists"],
-      required: [true, "Username cannot be empty"],
+      required: true,
     },
     password: {
       type: String,
-      minLength: 6,
-      required: [true, "Password cannot be empty"],
+      required: true,
     },
     displayName: {
       type: String,
-      minLength: 1,
-      maxLength: 15,
+      required: true,
     },
     followers: [String],
     following: [String],

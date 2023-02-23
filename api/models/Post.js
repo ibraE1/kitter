@@ -2,14 +2,21 @@ import mongoose from "mongoose";
 
 const PostSchema = new mongoose.Schema(
   {
-    author: String,
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     content: {
       type: String,
-      minLength: 1,
-      maxLength: 140,
-      required: [true, "Post cannot be empty"],
+      required: true,
     },
-    likes: [String],
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   { timestamps: true }
 );

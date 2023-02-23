@@ -27,6 +27,7 @@ mongoose
   .connect(process.env.MONGO_URL, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
+    dbName: "kitter",
   })
   .then(() => {
     app.listen(port, () => {
