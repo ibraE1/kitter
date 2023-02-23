@@ -86,7 +86,7 @@ const deletePost = async (req, res) => {
       return res.status(400).json("Not authorized to delete this post");
 
     await post.deleteOne();
-    return res.status(200).json(post);
+    return res.status(200).json("Deleted post");
   } catch (error) {
     return res.status(500).json(error.message);
   }

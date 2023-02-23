@@ -4,9 +4,10 @@ import Post from "../models/Post.js";
 
 const getUserByUsername = async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username }).select(
-      "-password"
-    );
+    const user = await User.findOne({ username: req.params.username })
+      .select("-password")
+      .populate("followers")
+      .populate("following");
 
     if (!user) return res.status(400).json("User does not exist");
 
@@ -18,7 +19,10 @@ const getUserByUsername = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select("-password");
+    const user = await User.findById(req.params.id)
+      .select("-password")
+      .populate("followers")
+      .populate("following");
 
     if (!user) return res.status(400).json("User does not exist");
 
@@ -41,8 +45,7 @@ const updateUserInfo = async (req, res) => {
     }
 
     await user.updateOne(req.body);
-    user.password = null;
-    return res.status(200).json(user);
+    return res.status(200).json("Updated user " + user.username);
   } catch (error) {
     return res.status(500).json(error.message);
   }
