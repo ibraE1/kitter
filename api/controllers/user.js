@@ -51,6 +51,42 @@ const updateUserInfo = async (req, res) => {
   }
 };
 
+const followUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(400).json("Post does not exist");
+
+    if (user.followers.includes(req.userid))
+      return res.status(400).json("Already liked this post");
+
+    const currentUser = await User.findById(req.userid);
+    await currentUser.updateOne({ $push: { following: user.userid } });
+
+    await user.updateOne({ $push: { likes: req.userid } });
+    return res.status(200).json("Followed user");
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+};
+
+const unfollowUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(400).json("Post does not exist");
+
+    if (!user.followers.includes(req.userid))
+      return res.status(400).json("Not following user");
+
+    const currentUser = await User.findById(req.userid);
+    await currentUser.updateOne({ $pull: { following: user.userid } });
+
+    await user.updateOne({ $pull: { followers: req.userid } });
+    return res.status(200).json("Unfollowed user");
+  } catch (error) {
+    return res.status(500).json(error.message);
+  }
+};
+
 const deleteUser = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username });
@@ -68,4 +104,11 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { getUserById, getUserByUsername, updateUserInfo, deleteUser };
+export {
+  getUserById,
+  getUserByUsername,
+  updateUserInfo,
+  deleteUser,
+  followUser,
+  unfollowUser,
+};

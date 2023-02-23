@@ -57,7 +57,6 @@ const likePost = async (req, res) => {
     await post.updateOne({ $push: { likes: req.userid } });
     return res.status(200).json("Liked post");
   } catch (error) {
-    console.log(error.message);
     return res.status(500).json(error.message);
   }
 };

@@ -2,7 +2,9 @@ import express from "express";
 import verifyToken from "../middleware/authMiddleware.js";
 import {
   deleteUser,
+  followUser,
   getUserByUsername,
+  unfollowUser,
   updateUserInfo,
 } from "../controllers/user.js";
 import { getAllPostsByUser } from "../controllers/post.js";
@@ -19,6 +21,12 @@ router.get("/:username/posts", verifyToken, getAllPostsByUser);
 
 // update user info
 router.put("/:username", verifyToken, updateUserInfo);
+
+// follow user
+router.put("/:username/follow", verifyToken, followUser);
+
+// unfollow user
+router.delete("/:username/follow", verifyToken, unfollowUser);
 
 // delete user
 router.delete("/:username", verifyToken, deleteUser);
