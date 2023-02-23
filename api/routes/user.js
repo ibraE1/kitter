@@ -5,7 +5,7 @@ import {
   getUserByUsername,
   updateUserInfo,
 } from "../controllers/user.js";
-import { getAllPostsByUsername } from "../controllers/post.js";
+import { getAllPostsByUser } from "../controllers/post.js";
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ const router = express.Router();
 router.get("/:username", verifyToken, getUserByUsername);
 
 // get posts by user
-router.get("/:username/posts", verifyToken, getAllPostsByUsername);
+router.get("/:username/posts", verifyToken, getAllPostsByUser);
 
 // update user info
 router.put("/:username", verifyToken, updateUserInfo);

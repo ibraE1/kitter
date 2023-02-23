@@ -25,10 +25,10 @@ router.put("/:id", verifyToken, editPost);
 router.delete("/:id", verifyToken, deletePost);
 
 // like post
-router.post("/like/:id", verifyToken, likePost);
+router.put("/:id/like", verifyToken, likePost);
 
 // unlike post
-router.post("/unlike/:id", verifyToken, unlikePost);
+router.delete("/:id/like", verifyToken, unlikePost);
 
 // get all posts
 router.get("/", verifyToken, getAllPosts);
