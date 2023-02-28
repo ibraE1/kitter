@@ -17,23 +17,35 @@ import Logo from "./components/Logo";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import Compose from "./components/Compose";
 import Profile from "./components/Profile";
+import { getUserById } from "./api/user";
 
 function App() {
   const [isloggedIn, setIsLoggedIn] = useState();
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUserId, setCurrentUserId] = useState();
+  const [currentUser, setCurrentUser] = useState({});
   const location = useLocation();
 
   useEffect(() => {
     const verify = async () => {
-      const data = await verifyLogin();
-      if (data.status == "Authorized") {
+      const res = await verifyLogin();
+      if (res.status == "200") {
         setIsLoggedIn(true);
-        setCurrentUser(data.userId);
+        setCurrentUserId(await res.json());
         redirect("/timeline");
-      } else setIsLoggedIn(false);
+      } else {
+        setIsLoggedIn(false);
+      }
     };
     verify();
   }, []);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const res = await getUserById(currentUserId);
+      if (res.status == "200") setCurrentUser(await res.json());
+    };
+    if (currentUserId) getUser();
+  }, [currentUserId]);
 
   return (
     <div className="h-screen bg-indigo-700">
@@ -61,7 +73,7 @@ function App() {
           )}
           {isloggedIn && (
             <div className="h-screen bg-white flex md:flex-row justify-start items-stretch md:justify-start">
-              <Navbar setIsLoggedIn={setIsLoggedIn} />
+              <Navbar setIsLoggedIn={setIsLoggedIn} currentUser={currentUser} />
               <Routes>
                 <Route path="/" element={<Navigate to={"/timeline"} />} />
                 <Route path="/timeline" element={<Timeline />} />

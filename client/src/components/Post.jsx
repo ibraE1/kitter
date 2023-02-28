@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { HeartIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { getUser } from "../api/user";
 import { deletePost, likePost, unlikePost } from "../api/post";
 
 function Post({ data, currentUser, removePost }) {
@@ -8,13 +7,13 @@ function Post({ data, currentUser, removePost }) {
   const [user, setUser] = useState({});
   const [isLiked, setIsLiked] = useState(data.likes.includes(currentUser));
 
-  useEffect(() => {
-    const fetch = async () => {
-      const userData = await getUser(data.author);
-      setUser(userData);
-    };
-    fetch();
-  }, []);
+  // useEffect(() => {
+  //   const fetch = async () => {
+  //     const userData = await getUser(data.author);
+  //     setUser(userData);
+  //   };
+  //   fetch();
+  // }, []);
 
   const like = async () => {
     setLikeCount(likeCount + 1);

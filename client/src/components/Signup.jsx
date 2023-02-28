@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../api/auth.js";
 import FormInput from "./FormInput.jsx";
-import Logo from "./Logo";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -16,9 +15,12 @@ function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const registerUser = async () => {
-      const userId = await register(formData);
-      console.log(userId);
-      navigate("/login");
+      const res = await register(formData);
+      if (res.status == "200") {
+        navigate("/login");
+      } else {
+        alert(await res.json());
+      }
     };
     registerUser();
   };

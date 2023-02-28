@@ -8,14 +8,14 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
 
-function Navbar({ setIsLoggedIn }) {
+function Navbar({ setIsLoggedIn, currentUser }) {
   const navigate = useNavigate();
 
   const handleLogout = (e) => {
     e.preventDefault();
     const logoutUser = async () => {
-      const data = await logout();
-      if (data == "Logged Out") {
+      const response = await logout();
+      if (response.status == "200") {
         setIsLoggedIn(false);
         navigate("/login");
       }
@@ -68,7 +68,7 @@ function Navbar({ setIsLoggedIn }) {
       >
         <UserCircleIcon className="h-10 md:h-7" />
         <p className="hidden md:block text-xl text-black font-medium">
-          Profile
+          {currentUser.username}
         </p>
       </Link>
       <button

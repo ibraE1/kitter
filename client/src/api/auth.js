@@ -7,8 +7,7 @@ const register = async (formData) => {
       },
       body: JSON.stringify(formData),
     });
-    const data = await response.json();
-    return data;
+    return response;
   } catch (error) {
     console.log(error);
   }
@@ -24,8 +23,7 @@ const login = async (formData) => {
       body: JSON.stringify(formData),
       credentials: "include",
     });
-    const data = await response.json();
-    return data;
+    return response;
   } catch (error) {
     console.log(error);
   }
@@ -37,8 +35,7 @@ const verifyLogin = async () => {
       method: "GET",
       credentials: "include",
     });
-    const data = await response.json();
-    return data;
+    return response;
   } catch (error) {
     console.log(error);
   }
@@ -50,8 +47,7 @@ const logout = async () => {
       method: "POST",
       credentials: "include",
     });
-    const data = await response.json();
-    return data;
+    return response;
   } catch (error) {
     console.log(error);
   }

@@ -14,10 +14,12 @@ function Login({ setIsLoggedIn }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const loginUser = async () => {
-      const userId = await login(formData);
-      if (userId) {
+      const res = await login(formData);
+      if (res.status == "200") {
         setIsLoggedIn(true);
         navigate("/timeline");
+      } else {
+        alert(await res.json());
       }
     };
     loginUser();
