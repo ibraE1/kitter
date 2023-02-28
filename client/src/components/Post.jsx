@@ -4,16 +4,7 @@ import { deletePost, likePost, unlikePost } from "../api/post";
 
 function Post({ data, currentUser, removePost }) {
   const [likeCount, setLikeCount] = useState(data.likes.length);
-  const [user, setUser] = useState({});
   const [isLiked, setIsLiked] = useState(data.likes.includes(currentUser));
-
-  // useEffect(() => {
-  //   const fetch = async () => {
-  //     const userData = await getUser(data.author);
-  //     setUser(userData);
-  //   };
-  //   fetch();
-  // }, []);
 
   const like = async () => {
     setLikeCount(likeCount + 1);
@@ -45,14 +36,14 @@ function Post({ data, currentUser, removePost }) {
       <div className="flex w-full md:w-2/5 p-3 gap-3 justify-between items-center ">
         <div className="flex flex-col justify-around">
           <div className="flex items-center gap-1 text-lg md:text-xl">
-            <p className="font-bold">{user.displayName}</p>
+            <p className="font-bold">{data.author.displayName}</p>
             <p className="font-black text-slate-500 mb-2">.</p>
-            <p className="text-slate-500">{user.displayName}</p>
+            <p className="text-slate-500">{data.author.username}</p>
           </div>
           <p className="text-lg md:text-xl">{data.content}</p>
         </div>
         <div className="flex gap-4">
-          {currentUser == user._id && (
+          {currentUser._id == data.author._id && (
             <button
               className="border-2 border-indigo-700 hover:border-indigo-500 stroke-2 text-indigo-700 hover:text-indigo-500 
       p-2 rounded-lg flex justify-between outline-none"
