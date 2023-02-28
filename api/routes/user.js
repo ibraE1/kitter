@@ -3,6 +3,7 @@ import verifyToken from "../middleware/authMiddleware.js";
 import {
   deleteUser,
   followUser,
+  getUserById,
   getUserByUsername,
   unfollowUser,
   updateUserInfo,
@@ -13,8 +14,11 @@ const router = express.Router();
 
 // create user in auth.js
 
-// get user
+// get user by username
 router.get("/:username", verifyToken, getUserByUsername);
+
+// get user by id
+router.get("/id/:id", verifyToken, getUserById);
 
 // get posts by user
 router.get("/:username/posts", verifyToken, getAllPostsByUser);
