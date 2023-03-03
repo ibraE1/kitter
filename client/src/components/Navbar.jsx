@@ -63,7 +63,7 @@ function Navbar({ setIsLoggedIn, currentUser }) {
         </h1>
       </button>
       <Link
-        to="/profile"
+        to={"/user/" + currentUser.username}
         className="text-indigo-700 hover:text-indigo-500 flex gap-4 items-center"
       >
         <UserCircleIcon className="h-10 md:h-7" />

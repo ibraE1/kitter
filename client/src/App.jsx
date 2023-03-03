@@ -16,7 +16,7 @@ import Login from "./components/Login";
 import Logo from "./components/Logo";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import Compose from "./components/Compose";
-import Profile from "./components/Profile";
+import User from "./components/User";
 import { getUserById } from "./api/user";
 
 function App() {
@@ -51,7 +51,7 @@ function App() {
 
   return (
     <div className="h-screen bg-indigo-700">
-      {currentUser == undefined || isloggedIn == undefined ? (
+      {isloggedIn == undefined ? (
         <div>Loading...</div>
       ) : (
         <>
@@ -78,7 +78,7 @@ function App() {
               </Routes>
             </div>
           )}
-          {isloggedIn && (
+          {isloggedIn && currentUser != undefined && (
             <div className="h-screen bg-white flex md:flex-row justify-start items-stretch md:justify-start">
               <Navbar setIsLoggedIn={setIsLoggedIn} currentUser={currentUser} />
               <Routes>
@@ -92,7 +92,10 @@ function App() {
                   element={<Explore currentUser={currentUser} />}
                 />
                 <Route path="/compose" element={<Compose />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route
+                  path="/user/*"
+                  element={<User currentUser={currentUser} />}
+                />
               </Routes>
               <Link
                 to="/compose"
