@@ -22,4 +22,20 @@ const getUserById = async (id) => {
   }
 };
 
-export { getUserByUsername, getUserById };
+const getAllPostsByUser = async (username) => {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/user/" + username + "/posts",
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getUserByUsername, getUserById, getAllPostsByUser };

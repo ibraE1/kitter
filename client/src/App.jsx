@@ -22,7 +22,7 @@ import { getUserById } from "./api/user";
 function App() {
   const [isloggedIn, setIsLoggedIn] = useState();
   const [currentUserId, setCurrentUserId] = useState();
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState();
   const location = useLocation();
 
   useEffect(() => {
@@ -44,12 +44,14 @@ function App() {
       const res = await getUserById(currentUserId);
       if (res.status == "200") setCurrentUser(await res.json());
     };
-    if (currentUserId) getUser();
+    if (currentUserId) {
+      getUser();
+    }
   }, [currentUserId]);
 
   return (
     <div className="h-screen bg-indigo-700">
-      {isloggedIn === undefined ? (
+      {currentUser == undefined || isloggedIn == undefined ? (
         <div>Loading...</div>
       ) : (
         <>
@@ -65,7 +67,12 @@ function App() {
                 <Route path="/*" element={<Navigate to={"/register"} />} />
                 <Route
                   path="/login"
-                  element={<Login setIsLoggedIn={setIsLoggedIn} />}
+                  element={
+                    <Login
+                      setIsLoggedIn={setIsLoggedIn}
+                      setCurrentUserId={setCurrentUserId}
+                    />
+                  }
                 />
                 <Route path="/register" element={<Signup />} />
               </Routes>
@@ -76,7 +83,10 @@ function App() {
               <Navbar setIsLoggedIn={setIsLoggedIn} currentUser={currentUser} />
               <Routes>
                 <Route path="/" element={<Navigate to={"/timeline"} />} />
-                <Route path="/timeline" element={<Timeline />} />
+                <Route
+                  path="/timeline"
+                  element={<Timeline currentUser={currentUser} />}
+                />
                 <Route
                   path="/explore"
                   element={<Explore currentUser={currentUser} />}

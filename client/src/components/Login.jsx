@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth.js";
 import FormInput from "./FormInput.jsx";
 
-function Login({ setIsLoggedIn }) {
+function Login({ setIsLoggedIn, setCurrentUserId }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -16,6 +16,7 @@ function Login({ setIsLoggedIn }) {
     const loginUser = async () => {
       const res = await login(formData);
       if (res.status == "200") {
+        setCurrentUserId(await res.json());
         setIsLoggedIn(true);
         navigate("/timeline");
       } else {
