@@ -20,8 +20,8 @@ const createPost = async (req, res) => {
 const getPostById = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
-      .populate({ path: "author", select: "-password" })
-      .populate({ path: "likes", select: "-password" });
+      .populate("author")
+      .populate("likes");
     if (!post) return res.status(400).json("Post does not exist");
 
     return res.status(200).json(post);
@@ -93,9 +93,7 @@ const deletePost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find()
-      .populate({ path: "author", select: "-password" })
-      .populate({ path: "likes", select: "-password" });
+    const posts = await Post.find().populate("author").populate("likes");
     return res.status(200).json(posts);
   } catch (error) {
     return res.status(500).json(error.message);
@@ -108,8 +106,8 @@ const getAllPostsByUser = async (req, res) => {
     if (!user) return res.status(400).json("User does not exist");
 
     const posts = await Post.find({ author: user })
-      .populate({ path: "author", select: "-password" })
-      .populate({ path: "likes", select: "-password" });
+      .populate("author")
+      .populate("likes");
     return res.status(200).json(posts);
   } catch (error) {
     return res.status(500).json(error.message);

@@ -5,7 +5,6 @@ import Post from "../models/Post.js";
 const getUserByUsername = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username })
-      .select("-password")
       .populate("followers")
       .populate("following");
 
@@ -20,7 +19,6 @@ const getUserByUsername = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
-      .select("-password")
       .populate("followers")
       .populate("following");
 
@@ -53,16 +51,16 @@ const updateUserInfo = async (req, res) => {
 
 const followUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(400).json("Post does not exist");
+    const user = await User.findOne({ username: req.params.username });
+    if (!user) return res.status(400).json("User does not exist");
 
     if (user.followers.includes(req.userid))
-      return res.status(400).json("Already liked this post");
+      return res.status(400).json("Already following this user");
 
     const currentUser = await User.findById(req.userid);
-    await currentUser.updateOne({ $push: { following: user.userid } });
+    await currentUser.updateOne({ $push: { following: user._id } });
 
-    await user.updateOne({ $push: { likes: req.userid } });
+    await user.updateOne({ $push: { followers: req.userid } });
     return res.status(200).json("Followed user");
   } catch (error) {
     return res.status(500).json(error.message);
@@ -71,14 +69,14 @@ const followUser = async (req, res) => {
 
 const unfollowUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(400).json("Post does not exist");
+    const user = await User.findOne({ username: req.params.username });
+    if (!user) return res.status(400).json("User does not exist");
 
     if (!user.followers.includes(req.userid))
       return res.status(400).json("Not following user");
 
     const currentUser = await User.findById(req.userid);
-    await currentUser.updateOne({ $pull: { following: user.userid } });
+    await currentUser.updateOne({ $pull: { following: user._id } });
 
     await user.updateOne({ $pull: { followers: req.userid } });
     return res.status(200).json("Unfollowed user");
