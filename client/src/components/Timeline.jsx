@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { getAllPostsByUser } from "../api/user";
 import Post from "./Post";
+import { useLocation } from "react-router-dom";
 
 function Timeline({ currentUser }) {
   const [posts, setPosts] = useState();
+  const location = useLocation();
 
   useEffect(() => {
     const following = currentUser.following.concat([currentUser]);
@@ -15,7 +17,7 @@ function Timeline({ currentUser }) {
       setPosts(userPosts);
     };
     getPosts();
-  }, []);
+  }, [location]);
 
   const removePost = async (id) => {
     setPosts(posts.filter((post) => post._id != id));

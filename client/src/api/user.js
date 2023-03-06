@@ -38,4 +38,42 @@ const getAllPostsByUser = async (username) => {
   }
 };
 
-export { getUserByUsername, getUserById, getAllPostsByUser };
+const followUser = async (username) => {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/user/" + username + "/follow",
+      {
+        method: "PUT",
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const unfollowUser = async (username) => {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/user/" + username + "/follow",
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  getUserByUsername,
+  getUserById,
+  getAllPostsByUser,
+  followUser,
+  unfollowUser,
+};

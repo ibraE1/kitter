@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { getAllPosts } from "../api/post";
 import Post from "./Post";
+import { useLocation } from "react-router-dom";
 
 function Explore({ currentUser }) {
   const [posts, setPosts] = useState();
+  const location = useLocation();
 
   useEffect(() => {
     const getPosts = async () => {
@@ -11,7 +13,7 @@ function Explore({ currentUser }) {
       setPosts(posts);
     };
     getPosts();
-  }, []);
+  }, [location]);
 
   const removePost = async (id) => {
     setPosts(posts.filter((post) => post._id != id));
