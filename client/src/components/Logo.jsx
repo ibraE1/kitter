@@ -1,20 +1,7 @@
-import logo from "../assets/logo.svg";
-import altlogo from "../assets/altlogo.svg";
+import logo from "../../public/logo.svg";
 
 function Logo({ styles }) {
-  return (
-    <img
-      src={logo}
-      alt="logo"
-      onMouseEnter={(e) => {
-        e.currentTarget.src = altlogo;
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.src = logo;
-      }}
-      className={styles}
-    />
-  );
+  return <img src={logo} alt="logo" className={styles} />;
 }
 
 export default Logo;

@@ -58,8 +58,8 @@ function App() {
           {!isloggedIn && (
             <div className="flex flex-col md:flex-row-reverse">
               <div className="flex flex-col py-4 m-auto items-center">
-                <Logo styles="w-24 md:w-96" />
-                <h1 className="text-center text-white text-4xl md:text-8xl font-black font-display">
+                <Logo styles="w-16 md:w-80 mb-1" />
+                <h1 className="text-center text-white text-4xl md:text-8xl font-black font-display -mb-1">
                   Kitter
                 </h1>
               </div>
