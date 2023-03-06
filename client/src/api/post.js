@@ -1,6 +1,6 @@
 const getPostById = async (id) => {
   try {
-    const response = await fetch("http://localhost:5000/post/" + id, {
+    const response = await fetch(import.meta.env.VITE_API_URL + "/post/" + id, {
       method: "GET",
       credentials: "include",
     });
@@ -13,7 +13,7 @@ const getPostById = async (id) => {
 
 const getAllPosts = async () => {
   try {
-    const response = await fetch("http://localhost:5000/post", {
+    const response = await fetch(import.meta.env.VITE_API_URL + "/post", {
       method: "GET",
       credentials: "include",
     });
@@ -26,7 +26,7 @@ const getAllPosts = async () => {
 
 const createPost = async (postContent) => {
   try {
-    const response = await fetch("http://localhost:5000/post", {
+    const response = await fetch(import.meta.env.VITE_API_URL + "/post", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,10 +43,13 @@ const createPost = async (postContent) => {
 
 const likePost = async (id) => {
   try {
-    const response = await fetch("http://localhost:5000/post/like/" + id, {
-      method: "POST",
-      credentials: "include",
-    });
+    const response = await fetch(
+      import.meta.env.VITE_API_URL + "/post/like/" + id,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
@@ -56,10 +59,13 @@ const likePost = async (id) => {
 
 const unlikePost = async (id) => {
   try {
-    const response = await fetch("http://localhost:5000/post/unlike/" + id, {
-      method: "POST",
-      credentials: "include",
-    });
+    const response = await fetch(
+      import.meta.env.VITE_API_URL + "/post/unlike/" + id,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
@@ -69,7 +75,7 @@ const unlikePost = async (id) => {
 
 const deletePost = async (id) => {
   try {
-    const response = await fetch("http://localhost:5000/post/" + id, {
+    const response = await fetch(import.meta.env.VITE_API_URL + "/post/" + id, {
       method: "DELETE",
       credentials: "include",
     });

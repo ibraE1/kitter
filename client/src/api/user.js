@@ -1,9 +1,12 @@
 const getUserByUsername = async (username) => {
   try {
-    const response = await fetch("http://localhost:5000/user/" + username, {
-      method: "GET",
-      credentials: "include",
-    });
+    const response = await fetch(
+      import.meta.env.VITE_API_URL + "/user/" + username,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
     return response;
   } catch (error) {
     console.log(error);
@@ -12,10 +15,13 @@ const getUserByUsername = async (username) => {
 
 const getUserById = async (id) => {
   try {
-    const response = await fetch("http://localhost:5000/user/id/" + id, {
-      method: "GET",
-      credentials: "include",
-    });
+    const response = await fetch(
+      import.meta.env.VITE_API_URL + "/user/id/" + id,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
     return response;
   } catch (error) {
     console.log(error);
@@ -25,7 +31,7 @@ const getUserById = async (id) => {
 const getAllPostsByUser = async (username) => {
   try {
     const response = await fetch(
-      "http://localhost:5000/user/" + username + "/posts",
+      import.meta.env.VITE_API_URL + "/user/" + username + "/posts",
       {
         method: "GET",
         credentials: "include",
@@ -41,7 +47,7 @@ const getAllPostsByUser = async (username) => {
 const followUser = async (username) => {
   try {
     const response = await fetch(
-      "http://localhost:5000/user/" + username + "/follow",
+      import.meta.env.VITE_API_URL + "/user/" + username + "/follow",
       {
         method: "PUT",
         credentials: "include",
@@ -57,7 +63,7 @@ const followUser = async (username) => {
 const unfollowUser = async (username) => {
   try {
     const response = await fetch(
-      "http://localhost:5000/user/" + username + "/follow",
+      import.meta.env.VITE_API_URL + "/user/" + username + "/follow",
       {
         method: "DELETE",
         credentials: "include",

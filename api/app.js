@@ -10,10 +10,12 @@ config();
 const app = express();
 const port = 5000;
 
+app.enable("trust proxy");
+
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://kitter.vercel.app"],
     credentials: true,
   })
 );

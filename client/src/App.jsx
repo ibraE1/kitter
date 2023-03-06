@@ -34,6 +34,7 @@ function App() {
         redirect("/timeline");
       } else {
         setIsLoggedIn(false);
+        redirect("/login");
       }
     };
     verify();

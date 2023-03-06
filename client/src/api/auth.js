@@ -1,12 +1,15 @@
 const register = async (formData) => {
   try {
-    const response = await fetch("http://localhost:5000/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    const response = await fetch(
+      import.meta.env.VITE_API_URL + "/auth/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
     return response;
   } catch (error) {
     console.log(error);
@@ -15,7 +18,7 @@ const register = async (formData) => {
 
 const login = async (formData) => {
   try {
-    const response = await fetch("http://localhost:5000/auth/login", {
+    const response = await fetch(import.meta.env.VITE_API_URL + "/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,10 +34,13 @@ const login = async (formData) => {
 
 const verifyLogin = async () => {
   try {
-    const response = await fetch("http://localhost:5000/auth/verifyLogin", {
-      method: "GET",
-      credentials: "include",
-    });
+    const response = await fetch(
+      import.meta.env.VITE_API_URL + "/auth/verifyLogin",
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
     return response;
   } catch (error) {
     console.log(error);
@@ -43,10 +49,13 @@ const verifyLogin = async () => {
 
 const logout = async () => {
   try {
-    const response = await fetch("http://localhost:5000/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    });
+    const response = await fetch(
+      import.meta.env.VITE_API_URL + "/auth/logout",
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
     return response;
   } catch (error) {
     console.log(error);
