@@ -83,6 +83,8 @@ const logout = async (req, res) => {
       httpOnly: true,
       sameSite: "none",
       secure: true,
+      domain: req.hostname,
+      path: "/",
     });
     return res.status(200).json("Logged Out");
   } catch (error) {
