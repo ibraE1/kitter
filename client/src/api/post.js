@@ -3,6 +3,7 @@ const getPostById = async (id) => {
     const response = await fetch(import.meta.env.VITE_API_URL + "/post/" + id, {
       method: "GET",
       credentials: "include",
+      mode: "cors",
     });
     const data = await response.json();
     return data;
@@ -16,6 +17,7 @@ const getAllPosts = async () => {
     const response = await fetch(import.meta.env.VITE_API_URL + "/post", {
       method: "GET",
       credentials: "include",
+      mode: "cors",
     });
     const data = await response.json();
     return data;
@@ -33,6 +35,7 @@ const createPost = async (postContent) => {
       },
       body: JSON.stringify({ content: postContent }),
       credentials: "include",
+      mode: "cors",
     });
     const data = await response.json();
     return data;
@@ -48,6 +51,7 @@ const likePost = async (id) => {
       {
         method: "POST",
         credentials: "include",
+        mode: "cors",
       }
     );
     const data = await response.json();
@@ -64,6 +68,7 @@ const unlikePost = async (id) => {
       {
         method: "POST",
         credentials: "include",
+        mode: "cors",
       }
     );
     const data = await response.json();
@@ -78,6 +83,7 @@ const deletePost = async (id) => {
     const response = await fetch(import.meta.env.VITE_API_URL + "/post/" + id, {
       method: "DELETE",
       credentials: "include",
+      mode: "cors",
     });
     const data = await response.json();
     return data;

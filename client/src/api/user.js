@@ -5,6 +5,7 @@ const getUserByUsername = async (username) => {
       {
         method: "GET",
         credentials: "include",
+        mode: "cors",
       }
     );
     return response;
@@ -20,6 +21,7 @@ const getUserById = async (id) => {
       {
         method: "GET",
         credentials: "include",
+        mode: "cors",
       }
     );
     return response;
@@ -35,6 +37,7 @@ const getAllPostsByUser = async (username) => {
       {
         method: "GET",
         credentials: "include",
+        mode: "cors",
       }
     );
     const data = await response.json();
@@ -51,6 +54,7 @@ const followUser = async (username) => {
       {
         method: "PUT",
         credentials: "include",
+        mode: "cors",
       }
     );
     const data = await response.json();
@@ -67,6 +71,7 @@ const unfollowUser = async (username) => {
       {
         method: "DELETE",
         credentials: "include",
+        mode: "cors",
       }
     );
     const data = await response.json();

@@ -25,6 +25,7 @@ const login = async (formData) => {
       },
       body: JSON.stringify(formData),
       credentials: "include",
+      mode: "cors",
     });
     return response;
   } catch (error) {
@@ -39,6 +40,7 @@ const verifyLogin = async () => {
       {
         method: "POST",
         credentials: "include",
+        mode: "cors",
       }
     );
     return response;
@@ -54,6 +56,7 @@ const logout = async () => {
       {
         method: "POST",
         credentials: "include",
+        mode: "cors",
       }
     );
     return response;
