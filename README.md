@@ -1,3 +1,3 @@
 # Kitter
 
-MERN bird app clone
+MERN stack twitter clone
